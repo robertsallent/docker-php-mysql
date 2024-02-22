@@ -23,8 +23,7 @@ RUN docker-php-ext-enable zip \
   && docker-php-ext-install soap \
   && docker-php-source delete
 
-RUN a2enmod rewrite setenvif \
-  && a2enconf disable-elb-healthcheck-log \ 
+RUN a2enmod rewrite \
   && a2dissite * \
   && a2disconf other-vhosts-access-log
 
