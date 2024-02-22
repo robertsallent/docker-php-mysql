@@ -1,0 +1,19 @@
+{
+	"type" : "project",
+	"license" : "proprietary",
+	"name" : "robertsallent/docker-php-mysql",
+	"description" : "Fast and light framework for PHP web applications",
+	"homepage" : "https://robertsallent.com",
+	"authors" : [{
+			"name" : "Robert Sallent",
+			"email" : "robert@juegayestudia.com",
+			"homepage" : "https://robertsallent.com",
+			"role" : "Engineer in Computer Science, teacher and developer"
+		}
+	],
+	"keywords" : [
+		"framework",
+		"php",
+		"webapp"
+	]
+}
