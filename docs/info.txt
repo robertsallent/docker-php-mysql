@@ -1,0 +1,4 @@
+
+Para levantar el contenedor:
+
+docker-compose up -d
