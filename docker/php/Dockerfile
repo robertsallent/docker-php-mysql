@@ -4,6 +4,7 @@
 # Creación de la imagen con el servidor web y PHP8.2
 
 # carga la imagen indicada en el fichero .env (8.2-apache)
+ARG php_version
 FROM php:${php_version}
 
 # actualizaciones, instalación de extensiones de PHP y configuración

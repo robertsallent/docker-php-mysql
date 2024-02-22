@@ -1,4 +1,7 @@
 
-Para levantar el contenedor:
+# Instrucciones básicas:
 
-docker-compose up -d
+docker-compose up -d    # Para crear el contenedor
+docker-compose start    # Iniciar 
+docker-compose stop     # Detener
+docker-compose down     # Detener y eliminar el contenedor
