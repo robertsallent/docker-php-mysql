@@ -2,7 +2,7 @@
 	"type" : "project",
 	"license" : "proprietary",
 	"name" : "robertsallent/docker-php-mysql",
-	"description" : "Fast and light framework for PHP web applications",
+	"description" : "Dockerizando mysql y apache-php para entornos de test.",
 	"homepage" : "https://robertsallent.com",
 	"authors" : [{
 			"name" : "Robert Sallent",
