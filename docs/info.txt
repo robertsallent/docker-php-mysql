@@ -5,3 +5,5 @@ docker-compose up -d    # Para crear el contenedor
 docker-compose start    # Iniciar 
 docker-compose stop     # Detener
 docker-compose down     # Detener y eliminar el contenedor
+
+# La clave del usuario root de mysql es dbpass 
