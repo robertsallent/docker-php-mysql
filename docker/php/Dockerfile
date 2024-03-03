@@ -27,8 +27,10 @@ RUN a2enmod rewrite \
   && a2dissite * \
   && a2disconf other-vhosts-access-log
 
-# para los virtualhosts (si fuera el caso)
-# COPY _linux_sites/*.conf /etc/apache2/sites-available/
+# modifica la configuración de Apache
+COPY config/000-default.conf /etc/apache2/sites-available/000-default.conf
+COPY config/docker-php.conf /etc/apache2/conf-available/docker-php.conf
+COPY config/apache2.conf /etc/apache2/apache2.conf
 
 # instalar composer
 COPY --from=composer /usr/bin/composer /usr/bin/composer
