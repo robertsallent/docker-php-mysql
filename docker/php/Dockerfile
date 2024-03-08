@@ -35,4 +35,9 @@ COPY config/apache2.conf /etc/apache2/apache2.conf
 # instalar composer
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
+# instalar postfix
+RUN echo "postfix postfix/mailname string test.example" | debconf-set-selections
+RUN echo "postfix postfix/main_mailer_type string 'Internet Site'" | debconf-set-selections
+RUN apt-get update && apt-get install --no-install-recommends -y postfix
+
 CMD ["apache2-foreground"]
