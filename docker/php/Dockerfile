@@ -19,6 +19,9 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 RUN pecl install zip pcov
 RUN docker-php-ext-enable zip \
   && docker-php-ext-install pdo_mysql \
+  && docker-php-ext-install mysqli \
+  && docker-php-ext-install zip \
+  && docker-php-ext-install fileinfo \
   && docker-php-ext-install bcmath \
   && docker-php-ext-install soap \
   && docker-php-source delete
@@ -31,6 +34,9 @@ RUN a2enmod rewrite \
 COPY config/000-default.conf /etc/apache2/sites-available/000-default.conf
 COPY config/docker-php.conf /etc/apache2/conf-available/docker-php.conf
 COPY config/apache2.conf /etc/apache2/apache2.conf
+
+# configuración del php
+COPY config/php.ini-development "$PHP_INI_DIR/php.ini"
 
 # instalar composer
 COPY --from=composer /usr/bin/composer /usr/bin/composer

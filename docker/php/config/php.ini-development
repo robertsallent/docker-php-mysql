@@ -75,7 +75,7 @@
 
 ; php.ini-production contains settings which hold security, performance and
 ; best practices at its core. But please be aware, these settings may break
-; compatibility with older or less security-conscious applications. We
+; compatibility with older or less security conscience applications. We
 ; recommending using the production ini in production and testing environments.
 
 ; php.ini-development is very similar to its production variant, except it is
@@ -144,11 +144,6 @@
 ;   Development Value: 5
 ;   Production Value: 5
 
-; session.sid_length
-;   Default Value: 32
-;   Development Value: 26
-;   Production Value: 26
-
 ; short_open_tag
 ;   Default Value: On
 ;   Development Value: Off
@@ -158,11 +153,6 @@
 ;   Default Value: "EGPCS"
 ;   Development Value: "GPCS"
 ;   Production Value: "GPCS"
-
-; zend.assertions
-;   Default Value: 1
-;   Development Value: 1
-;   Production Value: -1
 
 ; zend.exception_ignore_args
 ;   Default Value: Off
@@ -708,7 +698,7 @@ auto_globals_jit = On
 ; Its value may be 0 to disable the limit. It is ignored if POST data reading
 ; is disabled through enable_post_data_reading.
 ; https://php.net/post-max-size
-post_max_size = 8M
+post_max_size = 40M
 
 ; Automatically add files before PHP document.
 ; https://php.net/auto-prepend-file
@@ -860,7 +850,7 @@ file_uploads = On
 
 ; Maximum allowed size for uploaded files.
 ; https://php.net/upload-max-filesize
-upload_max_filesize = 2M
+upload_max_filesize = 40M
 
 ; Maximum number of files that can be uploaded via a single request
 max_file_uploads = 20
@@ -937,18 +927,22 @@ default_socket_timeout = 60
 ;extension=curl
 ;extension=ffi
 ;extension=ftp
-;extension=fileinfo
+extension=fileinfo
 ;extension=gd
 ;extension=gettext
 ;extension=gmp
 ;extension=intl
+;extension=imap
 ;extension=mbstring
 ;extension=exif      ; Must be after mbstring as it depends on it
-;extension=mysqli
+extension=mysqli
+;extension=oci8_12c  ; Use with Oracle Database 12c Instant Client
+;extension=oci8_19  ; Use with Oracle Database 19 Instant Client
 ;extension=odbc
 ;extension=openssl
 ;extension=pdo_firebird
-;extension=pdo_mysql
+extension=pdo_mysql
+;extension=pdo_oci
 ;extension=pdo_odbc
 ;extension=pdo_pgsql
 ;extension=pdo_sqlite
@@ -959,13 +953,13 @@ default_socket_timeout = 60
 ; See https://www.php.net/manual/en/snmp.installation.php
 ;extension=snmp
 
-;extension=soap
+extension=soap
 ;extension=sockets
-;extension=sodium
+extension=sodium
 ;extension=sqlite3
 ;extension=tidy
 ;extension=xsl
-;extension=zip
+extension=zip
 
 ;zend_extension=opcache
 
@@ -1019,6 +1013,13 @@ cli_server.color = On
 ; otherwise output encoding conversion cannot be performed.
 ;iconv.output_encoding =
 
+[imap]
+; rsh/ssh logins are disabled by default. Use this INI entry if you want to
+; enable them. Note that the IMAP library does not filter mailbox names before
+; passing them to rsh/ssh command, thus passing untrusted data to this function
+; with rsh/ssh enabled is insecure.
+;imap.enable_insecure_rsh=0
+
 [intl]
 ;intl.default_locale =
 ; This directive allows you to produce PHP errors when some error
@@ -1065,7 +1066,7 @@ cli_server.color = On
 [Pdo_mysql]
 ; Default socket name for local MySQL connects.  If empty, uses the built-in
 ; MySQL defaults.
-pdo_mysql.default_socket=
+pdo_mysql.default_socket="MySQL"
 
 [Phar]
 ; https://php.net/phar.readonly
@@ -1085,7 +1086,7 @@ smtp_port = 25
 
 ; For Win32 only.
 ; https://php.net/sendmail-from
-;sendmail_from = me@example.com
+;sendmail_from = no-reply@fastlight.robertsallent.com
 
 ; For Unix only.  You may supply arguments as well (default: "sendmail -t -i").
 ; https://php.net/sendmail-path
@@ -1182,7 +1183,7 @@ mysqli.default_port = 3306
 ; Default socket name for local MySQL connects.  If empty, uses the built-in
 ; MySQL defaults.
 ; https://php.net/mysqli.default-socket
-mysqli.default_socket =
+mysqli.default_socket = "MySQL"
 
 ; Default host for mysqli_connect() (doesn't apply in safe mode).
 ; https://php.net/mysqli.default-host
@@ -1190,7 +1191,7 @@ mysqli.default_host =
 
 ; Default user for mysqli_connect() (doesn't apply in safe mode).
 ; https://php.net/mysqli.default-user
-mysqli.default_user =
+mysqli.default_user = dbuser
 
 ; Default password for mysqli_connect() (doesn't apply in safe mode).
 ; Note that this is generally a *bad* idea to store passwords in this file.
@@ -1198,7 +1199,7 @@ mysqli.default_user =
 ; and reveal this password!  And of course, any users with read access to this
 ; file will be able to reveal the password as well.
 ; https://php.net/mysqli.default-pw
-mysqli.default_pw =
+mysqli.default_pw = dbpass
 
 ; If this option is enabled, closing a persistent connection will rollback
 ; any pending transactions of this connection, before it is put back
@@ -1238,6 +1239,66 @@ mysqlnd.collect_memory_statistics = On
 ; SHA-256 Authentication Plugin related. File with the MySQL server public RSA
 ; key.
 ;mysqlnd.sha256_server_public_key =
+
+[OCI8]
+
+; Connection: Enables privileged connections using external
+; credentials (OCI_SYSOPER, OCI_SYSDBA)
+; https://php.net/oci8.privileged-connect
+;oci8.privileged_connect = Off
+
+; Connection: The maximum number of persistent OCI8 connections per
+; process. Using -1 means no limit.
+; https://php.net/oci8.max-persistent
+;oci8.max_persistent = -1
+
+; Connection: The maximum number of seconds a process is allowed to
+; maintain an idle persistent connection. Using -1 means idle
+; persistent connections will be maintained forever.
+; https://php.net/oci8.persistent-timeout
+;oci8.persistent_timeout = -1
+
+; Connection: The number of seconds that must pass before issuing a
+; ping during oci_pconnect() to check the connection validity. When
+; set to 0, each oci_pconnect() will cause a ping. Using -1 disables
+; pings completely.
+; https://php.net/oci8.ping-interval
+;oci8.ping_interval = 60
+
+; Connection: Set this to a user chosen connection class to be used
+; for all pooled server requests with Oracle Database Resident
+; Connection Pooling (DRCP).  To use DRCP, this value should be set to
+; the same string for all web servers running the same application,
+; the database pool must be configured, and the connection string must
+; specify to use a pooled server.
+;oci8.connection_class =
+
+; High Availability: Using On lets PHP receive Fast Application
+; Notification (FAN) events generated when a database node fails. The
+; database must also be configured to post FAN events.
+;oci8.events = Off
+
+; Tuning: This option enables statement caching, and specifies how
+; many statements to cache. Using 0 disables statement caching.
+; https://php.net/oci8.statement-cache-size
+;oci8.statement_cache_size = 20
+
+; Tuning: Enables row prefetching and sets the default number of
+; rows that will be fetched automatically after statement execution.
+; https://php.net/oci8.default-prefetch
+;oci8.default_prefetch = 100
+
+; Tuning: Sets the amount of LOB data that is internally returned from
+; Oracle Database when an Oracle LOB locator is initially retrieved as
+; part of a query. Setting this can improve performance by reducing
+; round-trips.
+; https://php.net/oci8.prefetch-lob-size
+; oci8.prefetch_lob_size = 0
+
+; Compatibility. Using On means oci_close() will not close
+; oci_connect() and oci_new_connect() connections.
+; https://php.net/oci8.old-oci-close-semantics
+;oci8.old_oci_close_semantics = Off
 
 [PostgreSQL]
 ; Allow or prevent persistent links.
@@ -1527,13 +1588,32 @@ session.sid_bits_per_character = 5
 ; -1: Do not compile at all
 ;  0: Jump over assertion at run-time
 ;  1: Execute assertions
-; Changing from or to a negative value is only possible in php.ini!
-; (For turning assertions on and off at run-time, toggle zend.assertions between the values 1 and 0)
+; Changing from or to a negative value is only possible in php.ini! (For turning assertions on and off at run-time, see assert.active, when zend.assertions = 1)
 ; Default Value: 1
 ; Development Value: 1
 ; Production Value: -1
 ; https://php.net/zend.assertions
 zend.assertions = 1
+
+; Assert(expr); active by default.
+; https://php.net/assert.active
+;assert.active = On
+
+; Throw an AssertionError on failed assertions
+; https://php.net/assert.exception
+;assert.exception = On
+
+; Issue a PHP warning for each failed assertion. (Overridden by assert.exception if active)
+; https://php.net/assert.warning
+;assert.warning = On
+
+; Don't bail out by default.
+; https://php.net/assert.bail
+;assert.bail = Off
+
+; User-function to be called if an assertion fails.
+; https://php.net/assert.callback
+;assert.callback = 0
 
 [COM]
 ; path to a file containing GUIDs, IIDs or filenames of files with TypeLibs
@@ -1766,6 +1846,10 @@ ldap.max_links = -1
 ; Allows exclusion of large files from being cached. By default all files
 ; are cached.
 ;opcache.max_file_size=0
+
+; Check the cache checksum each N requests.
+; The default value of "0" means that the checks are disabled.
+;opcache.consistency_checks=0
 
 ; How long to wait (in seconds) for a scheduled restart to begin if the cache
 ; is not being accessed.
