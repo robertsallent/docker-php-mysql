@@ -3,6 +3,6 @@
 # =========================================================
 # Creación de la imagen con el SGDB
 
-# carga la imagen indicada en el fichero .env (5.7)
+# carga la imagen indicada en el fichero .env 
 ARG mysql_version
 FROM mysql:${mysql_version}
