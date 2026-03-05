@@ -13,9 +13,9 @@
 
 <p>Está pensado para que lo podáis usar libremente, tan solo tenéis que agradecer al autor y darle apoyo moral en sus proyectos, por ejemplo:</p>
 
-- https://juegayestudia.com
-- https://fastlight.org
-- https://veinspercubelles.org
+- <a href="https://juegayestudia.com">https://juegayestudia.com</a>
+- <a href="https://fastlight.org">https://fastlight.org</a>
+- <a href="https://veinspercubelles.org">https://veinspercubelles.org</a>
 
 
 <h2>Creación del nuevo proyecto</h2>
@@ -80,3 +80,7 @@
 <h2>TODO list</h2>
 
 - Hacer que funcione mysqldump para poder realizar exportaciones de las BDDs desde las aplicaciones
+
+<h2>Créditos</h2>
+
+<p><a href="https://robertsallent.com">Robert Sallent</a>, ingeniero superior en informática y formador ocupacional.</p>
