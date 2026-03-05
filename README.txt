@@ -1,5 +1,16 @@
+--------------------------------------------------------------------------------------
+INFORMACIÓN
+---------------------------------------------------------------------------------------
 
-INSTRUCCIONES BÁSICAS
+Entorno de desarrollo y pruebas para aplicaciones web, con:
+
+- MySQL 8.0
+- PHP 8.2
+- phpmyadmin
+- postfix
+
+--------------------------------------------------------------------------------------
+INSTRUCCIONES BÁSICAS PARA DOCKER
 ---------------------------------------------------------------------------------------
 
 docker compose build    # reconstruye los contenedores a partir del docker-compose.yml
@@ -19,6 +30,20 @@ Para probar, ves al navegador y escribe en la barra de direcciones:
 localhost:8080  # Visualizar la aplicación
 localhost:8081  # Abrir phpmyadmin
 
-TODO:
-- Añadir y configurar un servidor de correo
+--------------------------------------------------------------------------------------
+LIMIPIEZA
+--------------------------------------------------------------------------------------
+
+Si queremos limpiar completamente y reconstruirlo todo desde cero, podemos hacer:
+
+docker compose down -v --remove-orphans
+docker builder prune -f
+docker compose build --no-cache
+docker compose up -d
+
+
+--------------------------------------------------------------------------------------
+TODO
+--------------------------------------------------------------------------------------
+
 - Hacer que funcione mysqldump para poder realizar exportaciones de las BDDs desde las aplicaciones
