@@ -79,7 +79,8 @@
 
 <h2>TODO list</h2>
 
-- Hacer que funcione mysqldump para poder realizar exportaciones de las BDDs desde las aplicaciones
+- Hacer que funcione mysqldump para poder realizar exportaciones de las BDDs desde las aplicaciones.
+- Revisar reinicios de Postfix.
 
 <h2>Créditos</h2>
 

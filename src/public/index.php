@@ -31,7 +31,8 @@
         		<p>Si puedes ver esto, significa que el servidor de Apache con php ha arrancado correctamente
         		dentro de su contenedor de Docker.</p>
         		
-        		<p>Asegúrate que MySQL también ha arrancado sin problemas y está listo, 
+        		<p>Asegúrate que MySQL también ha arrancado sin problemas y está listo (suele tardar
+        		unos segundos, ten paciencia), 
         		para ello puedes crear una nueva conexión con los siguientes datos:</p>
         		<ul>
         			<li>host: <b>mysql</b></li>
